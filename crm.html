@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TravelCRM - Complete System</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
 
         /* PDF Template Styles */
         .a4-container {
-            width: 794px; /* Standard A4 width in px */
+            width: 794px;
+            /* Standard A4 width in px */
             min-height: 1123px;
             background: white;
             padding: 40px;
@@ -28,6 +46,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100 min-h-screen text-gray-800">
 
     <div id="view-login" class="min-h-screen flex items-center justify-center p-4">
@@ -37,27 +56,37 @@
                 <h1 class="text-2xl font-bold text-gray-800">TravelCRM Login</h1>
                 <p class="text-gray-500 text-sm">Welcome back! Please login to continue.</p>
             </div>
-            
+
             <form onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                    <input type="email" id="login-email" required class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="admin@crm.com">
+                    <input type="email" id="login-email" required
+                        class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="admin@crm.com">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input type="password" id="login-pass" required class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="••••••••">
+                    <input type="password" id="login-pass" required
+                        class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Sign In</button>
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Sign
+                    In</button>
             </form>
 
             <div class="mt-6 text-center text-sm">
                 <p class="text-gray-500">Don't have an account?</p>
-                <button onclick="switchView('register')" class="text-blue-600 font-bold hover:underline">Register as Agent</button>
+                <button onclick="switchView('register')" class="text-blue-600 font-bold hover:underline">Register as
+                    Agent</button>
             </div>
-            
+
             <div class="mt-8 bg-blue-50 p-3 rounded text-xs text-blue-800">
                 <p><strong>Demo Credentials:</strong></p>
                 <p>Admin: admin@crm.com / admin123</p>
+                <p>Hotel: hotel@demo.com / 123</p>
+                <p>Cab: cab@demo.com / 123</p>
+                <p>Bus: bus@demo.com / 123</p>
             </div>
         </div>
     </div>
@@ -68,15 +97,19 @@
                 <h1 class="text-2xl font-bold text-gray-800">Partner Registration</h1>
                 <p class="text-gray-500 text-sm">Join our network of travel service providers.</p>
             </div>
-            
+
             <form onsubmit="handleRegister(event)" class="space-y-3">
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="text" name="name" placeholder="Full Name" required class="border px-3 py-2 rounded-lg w-full">
-                    <input type="text" name="phone" placeholder="Phone" required class="border px-3 py-2 rounded-lg w-full">
+                    <input type="text" name="name" placeholder="Full Name" required
+                        class="border px-3 py-2 rounded-lg w-full">
+                    <input type="text" name="phone" placeholder="Phone" required
+                        class="border px-3 py-2 rounded-lg w-full">
                 </div>
-                <input type="email" name="email" placeholder="Email Address" required class="border px-3 py-2 rounded-lg w-full">
-                <input type="password" name="password" placeholder="Create Password" required class="border px-3 py-2 rounded-lg w-full">
-                
+                <input type="email" name="email" placeholder="Email Address" required
+                    class="border px-3 py-2 rounded-lg w-full">
+                <input type="password" name="password" placeholder="Create Password" required
+                    class="border px-3 py-2 rounded-lg w-full">
+
                 <div>
                     <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Service Type</label>
                     <select name="role" class="w-full border px-3 py-2 rounded-lg bg-white">
@@ -86,40 +119,47 @@
                     </select>
                 </div>
 
-                <input type="text" name="serviceName" placeholder="Business Name (e.g. Sunshine Hotel)" required class="border px-3 py-2 rounded-lg w-full">
+                <input type="text" name="serviceName" placeholder="Business Name (e.g. Sunshine Hotel)" required
+                    class="border px-3 py-2 rounded-lg w-full">
 
-                <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition mt-2">Register Now</button>
+                <button type="submit"
+                    class="w-full bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition mt-2">Register
+                    Now</button>
             </form>
 
             <div class="mt-4 text-center">
-                <button onclick="switchView('login')" class="text-gray-500 text-sm hover:text-gray-800">Back to Login</button>
+                <button onclick="switchView('login')" class="text-gray-500 text-sm hover:text-gray-800">Back to
+                    Login</button>
             </div>
         </div>
     </div>
 
     <div id="view-app" class="hidden">
-        
+
         <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50 shadow-lg print:hidden">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-plane-departure text-2xl text-blue-400"></i>
                     <div>
                         <h1 class="text-xl font-bold tracking-wider leading-none">TravelCRM</h1>
-                        <span id="nav-role-badge" class="text-[10px] bg-blue-600 px-2 rounded uppercase font-bold">Admin</span>
+                        <span id="nav-role-badge"
+                            class="text-[10px] bg-blue-600 px-2 rounded uppercase font-bold">Admin</span>
                     </div>
                 </div>
-                
+
                 <div class="flex items-center gap-4">
                     <div class="text-right hidden md:block">
                         <div id="nav-user-name" class="font-bold text-sm">Admin User</div>
                         <div id="nav-user-email" class="text-xs text-gray-400">admin@crm.com</div>
                     </div>
-                    
-                    <button id="btn-profile" onclick="toggleModal('profile-modal')" class="hidden bg-slate-700 hover:bg-slate-600 p-2 rounded-full w-10 h-10 transition">
+
+                    <button id="btn-profile" onclick="toggleModal('profile-modal')"
+                        class="hidden bg-slate-700 hover:bg-slate-600 p-2 rounded-full w-10 h-10 transition">
                         <i class="fa-solid fa-user-gear"></i>
                     </button>
 
-                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-xs font-bold transition">
+                    <button onclick="logout()"
+                        class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-xs font-bold transition">
                         Logout
                     </button>
                 </div>
@@ -127,20 +167,24 @@
         </nav>
 
         <main class="max-w-7xl mx-auto p-6">
-            
+
             <div id="dashboard-admin" class="hidden fade-in">
                 <div class="flex gap-4 border-b mb-6">
-                    <button onclick="switchAdminTab('leads')" id="tab-leads" class="px-4 py-2 border-b-2 border-blue-600 font-bold text-blue-600">Active Leads</button>
-                    <button onclick="switchAdminTab('users')" id="tab-users" class="px-4 py-2 text-gray-500 hover:text-gray-700 relative">
+                    <button onclick="switchAdminTab('leads')" id="tab-leads"
+                        class="px-4 py-2 border-b-2 border-blue-600 font-bold text-blue-600">Active Leads</button>
+                    <button onclick="switchAdminTab('users')" id="tab-users"
+                        class="px-4 py-2 text-gray-500 hover:text-gray-700 relative">
                         Manage Users
-                        <span id="badge-pending" class="hidden absolute top-1 right-0 bg-red-500 text-white text-[9px] px-1.5 rounded-full">0</span>
+                        <span id="badge-pending"
+                            class="hidden absolute top-1 right-0 bg-red-500 text-white text-[9px] px-1.5 rounded-full">0</span>
                     </button>
                 </div>
 
                 <div id="section-leads">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-bold text-gray-800">Tour Leads</h2>
-                        <button onclick="toggleModal('lead-modal')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center gap-2">
+                        <button onclick="toggleModal('lead-modal')"
+                            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center gap-2">
                             <i class="fa-solid fa-plus"></i> New Lead
                         </button>
                     </div>
@@ -166,9 +210,11 @@
                             Total Users: <span id="stat-users-total" class="font-bold">0</span>
                         </div>
                     </div>
-                    
-                    <div id="pending-approvals-box" class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 hidden">
-                        <h3 class="font-bold text-yellow-800 mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pending Registrations</h3>
+
+                    <div id="pending-approvals-box"
+                        class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 hidden">
+                        <h3 class="font-bold text-yellow-800 mb-2"><i
+                                class="fa-solid fa-triangle-exclamation mr-2"></i>Pending Registrations</h3>
                         <div id="pending-users-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </div>
 
@@ -192,7 +238,8 @@
                 <div class="mb-6 flex justify-between items-end border-b pb-4">
                     <div>
                         <h2 class="text-2xl font-bold text-gray-800">My Deals</h2>
-                        <p class="text-gray-500 text-sm">Requests for <span id="agent-service-name" class="font-bold text-gray-700">...</span></p>
+                        <p class="text-gray-500 text-sm">Requests for <span id="agent-service-name"
+                                class="font-bold text-gray-700">...</span></p>
                     </div>
                 </div>
                 <div id="agent-deals-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
@@ -205,30 +252,37 @@
         </main>
     </div>
 
-    <div id="lead-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
+    <div id="lead-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
         <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6">
             <div class="flex justify-between mb-4">
                 <h3 class="font-bold text-lg">Create New Lead</h3>
                 <button onclick="toggleModal('lead-modal')"><i class="fa-solid fa-times"></i></button>
             </div>
             <form onsubmit="handleCreateLead(event)" class="grid grid-cols-2 gap-4">
-                <input type="text" name="customerName" placeholder="Customer Name" required class="border p-2 rounded col-span-2">
-                <input type="text" name="package" placeholder="Package Name" required class="border p-2 rounded col-span-2">
+                <input type="text" name="customerName" placeholder="Customer Name" required
+                    class="border p-2 rounded col-span-2">
+                <input type="text" name="package" placeholder="Package Name" required
+                    class="border p-2 rounded col-span-2">
                 <input type="date" name="date" required class="border p-2 rounded">
                 <input type="number" name="pax" placeholder="Pax" required class="border p-2 rounded">
-                
+
                 <div class="col-span-2 text-xs font-bold text-gray-500 uppercase mt-2">Allocated Budgets (INR)</div>
                 <input type="number" name="budgetHotel" placeholder="Hotel Budget" required class="border p-2 rounded">
                 <input type="number" name="budgetCab" placeholder="Cab Budget" required class="border p-2 rounded">
                 <input type="number" name="budgetBus" placeholder="Bus Budget" required class="border p-2 rounded">
-                <input type="number" name="totalAmount" placeholder="Total Client Price" required class="border p-2 rounded bg-gray-50 font-bold">
-                
-                <button type="submit" class="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 font-bold mt-2">Create Lead</button>
+                <input type="number" name="totalAmount" placeholder="Total Client Price" required
+                    class="border p-2 rounded bg-gray-50 font-bold">
+
+                <button type="submit"
+                    class="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 font-bold mt-2">Create
+                    Lead</button>
             </form>
         </div>
     </div>
 
-    <div id="profile-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
+    <div id="profile-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
         <div class="bg-white w-full max-w-md rounded-xl shadow-2xl p-6">
             <div class="flex justify-between mb-4 border-b pb-2">
                 <h3 class="font-bold text-lg">Edit Profile</h3>
@@ -249,23 +303,25 @@
                 </div>
                 <div>
                     <label class="text-xs text-gray-500">Password</label>
-                    <input type="password" id="edit-pass" placeholder="Leave blank to keep same" class="w-full border p-2 rounded">
+                    <input type="password" id="edit-pass" placeholder="Leave blank to keep same"
+                        class="w-full border p-2 rounded">
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Update Profile</button>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Update
+                    Profile</button>
             </form>
         </div>
     </div>
 
     <div style="position: absolute; left: -9999px;">
         <div id="voucher-template" class="a4-container text-gray-800">
-            
+
             <div class="flex justify-between items-center border-b-2 border-blue-800 pb-6 mb-8">
                 <div>
-                    <h1 class="text-3xl font-bold text-blue-900 uppercase tracking-widest">Wanderlust</h1>
+                    <h1 class="text-3xl font-bold text-blue-900 uppercase tracking-widest">HIGH DIGI TECH</h1>
                     <p class="text-sm font-semibold text-gray-500 tracking-wider">TRAVELS & HOLIDAYS</p>
                 </div>
                 <div class="text-right">
-                    <h2 class="text-xl font-bold text-gray-400">TRAVEL INVOICE</h2>
+                    <h2 class="text-xl font-bold text-gray-400">TRAVEL VOUCHER</h2>
                     <p class="text-sm font-mono mt-1 text-gray-600">REF: <span id="v-ref"></span></p>
                 </div>
             </div>
@@ -310,13 +366,14 @@
 
             <div class="mt-8 flex justify-between items-center bg-blue-50 p-6 rounded-lg border border-blue-200">
                 <div>
-                    <p class="text-sm font-bold text-gray-500 uppercase">Total Amount Due</p>
+                    <p class="text-sm font-bold text-gray-500 uppercase">Total Amount </p>
                     <p class="text-3xl font-bold text-blue-900">₹ <span id="v-amount">0</span></p>
                     <p class="text-xs text-gray-500 mt-1">Tax Inclusive</p>
                 </div>
-                
+
                 <a id="v-pay-btn" href="#" target="_blank" style="text-decoration: none; display: inline-block;">
-                    <div style="background-color: #2563eb; color: white; padding: 15px 30px; border-radius: 8px; font-weight: bold; font-family: sans-serif;">
+                    <div
+                        style="background-color: #2563eb; color: white; padding: 15px 30px; border-radius: 8px; font-weight: bold; font-family: sans-serif;">
                         PAY NOW <i class="fa-solid fa-arrow-right ml-2"></i>
                     </div>
                 </a>
@@ -325,7 +382,7 @@
             <div class="mt-10 pt-6 border-t border-gray-300 text-xs text-gray-500 text-center">
                 <p class="font-bold text-gray-700 mb-1">Terms & Conditions</p>
                 <p>Click the 'Pay Now' button above to complete your booking securely.</p>
-                <div class="mt-4 font-mono text-gray-400">Generated by WanderlustCRM System</div>
+                <div class="mt-4 font-mono text-gray-400">Generated by Vivek System</div>
             </div>
 
         </div>
@@ -336,14 +393,15 @@
         const defaultUsers = [
             { id: 1, name: 'Super Admin', email: 'admin@crm.com', pass: 'admin123', role: 'admin', status: 'active', serviceName: 'HQ' },
             { id: 2, name: 'Rajesh Hotelier', email: 'hotel@demo.com', pass: '123', role: 'hotel', status: 'active', serviceName: 'Royal Palace Hotel', phone: '9876543210' },
-            { id: 3, name: 'Suresh Cabs', email: 'cab@demo.com', pass: '123', role: 'cab', status: 'active', serviceName: 'Fast Cabs', phone: '9988776655' }
+            { id: 3, name: 'Rahul kumar', email: 'bus@demo.com', pass: '123', role: 'bus', status: 'active', serviceName: 'Royal Palace Hotel', phone: '9876543210' },
+            { id: 4, name: 'Suresh Cabs', email: 'cab@demo.com', pass: '123', role: 'cab', status: 'active', serviceName: 'Fast Cabs', phone: '9988776655' }
         ];
 
         let db = {
             users: JSON.parse(localStorage.getItem('crm_users')) || defaultUsers,
             leads: JSON.parse(localStorage.getItem('crm_leads')) || []
         };
-        
+
         let currentUser = null;
 
         function saveData() {
@@ -374,9 +432,9 @@
                 email: fd.get('email'),
                 pass: fd.get('password'),
                 phone: fd.get('phone'),
-                role: fd.get('role'), 
+                role: fd.get('role'),
                 serviceName: fd.get('serviceName'),
-                status: 'pending' 
+                status: 'pending'
             };
             if (db.users.find(u => u.email === newUser.email)) { alert('Email already registered!'); return; }
 
@@ -388,13 +446,13 @@
 
         function logout() {
             currentUser = null;
-            location.reload(); 
+            location.reload();
         }
 
         // --- 3. VIEW MANAGEMENT ---
         function switchView(viewName) {
             document.querySelectorAll('body > div').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            document.getElementById('view-' + viewName).classList.remove('hidden');
         }
 
         function initApp() {
@@ -406,7 +464,7 @@
             if (currentUser.role === 'admin') {
                 document.getElementById('dashboard-admin').classList.remove('hidden');
                 document.getElementById('btn-profile').classList.add('hidden');
-                renderAdminUsers(); 
+                renderAdminUsers();
                 renderAdminLeads();
             } else {
                 document.getElementById('dashboard-agent').classList.remove('hidden');
@@ -428,12 +486,12 @@
             document.getElementById('tab-users').classList.add('text-gray-500');
             document.getElementById('tab-leads').classList.add('text-gray-500');
 
-            document.getElementById(`section-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).classList.add('border-b-2', 'border-blue-600', 'text-blue-600');
-            document.getElementById(`tab-${tab}`).classList.remove('text-gray-500');
+            document.getElementById('section-' + tab).classList.remove('hidden');
+            document.getElementById('tab-' + tab).classList.add('border-b-2', 'border-blue-600', 'text-blue-600');
+            document.getElementById('tab-' + tab).classList.remove('text-gray-500');
 
-            if(tab === 'users') renderAdminUsers();
-            if(tab === 'leads') renderAdminLeads();
+            if (tab === 'users') renderAdminUsers();
+            if (tab === 'leads') renderAdminLeads();
         }
 
         function renderAdminUsers() {
@@ -441,7 +499,7 @@
             const all = db.users;
 
             const badge = document.getElementById('badge-pending');
-            if(pending.length > 0) {
+            if (pending.length > 0) {
                 badge.innerText = pending.length;
                 badge.classList.remove('hidden');
                 document.getElementById('pending-approvals-box').classList.remove('hidden');
@@ -485,9 +543,9 @@
 
         function approveUser(id, isApproved) {
             const user = db.users.find(u => u.id === id);
-            if(isApproved) {
+            if (isApproved) {
                 user.status = 'active';
-                alert(`${user.name} Approved!`);
+                alert(user.name + ' Approved!');
             } else {
                 db.users = db.users.filter(u => u.id !== id);
                 alert('User request rejected.');
@@ -500,7 +558,7 @@
             e.preventDefault();
             const fd = new FormData(e.target);
             const newLead = {
-                id: 'LD-'+Date.now().toString().slice(-4),
+                id: 'LD-' + Date.now().toString().slice(-4),
                 customer: fd.get('customerName'),
                 pkg: fd.get('package'),
                 date: fd.get('date'),
@@ -524,9 +582,9 @@
             tbody.innerHTML = '';
             db.leads.forEach(l => {
                 const isDone = l.status.hotel === 'accepted' && l.status.cab === 'accepted' && l.status.bus === 'accepted';
-                
-                // --- NEW BUTTON LOGIC FOR PDF ---
-                const actionBtn = isDone 
+
+                // --- FIXED BUTTON LOGIC FOR PDF ---
+                const actionBtn = isDone
                     ? `<button onclick="downloadPDF('${l.id}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs flex items-center gap-2 ml-auto"><i class="fa-solid fa-download"></i> Download Invoice</button>`
                     : `<span class="text-gray-400 text-xs italic">Waiting for Agents...</span>`;
 
@@ -555,7 +613,7 @@
         // --- 5. PDF GENERATION ENGINE (Merged) ---
         function downloadPDF(leadId) {
             const lead = db.leads.find(l => l.id === leadId);
-            if(!lead) return;
+            if (!lead) return;
 
             // 1. Inject Data into Template
             document.getElementById('v-ref').innerText = lead.id;
@@ -566,17 +624,17 @@
             document.getElementById('v-amount').innerText = lead.total;
 
             // 2. Set Dynamic Payment Link
-            const paymentUrl = `https://example.com/pay/${lead.id}?amount=${lead.total}`;
+            const paymentUrl = 'https://example.com/pay/' + lead.id + '?amount=' + lead.total;
             document.getElementById('v-pay-btn').href = paymentUrl;
 
             // 3. Generate PDF
             const element = document.getElementById('voucher-template');
             const opt = {
-                margin:       0,
-                filename:     `Invoice_${lead.customer.replace(/\s+/g, '_')}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true }, 
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                margin: 0,
+                filename: 'Invoice_' + lead.customer.replace(/\s+/g, '_') + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
             html2pdf().set(opt).from(element).save();
@@ -589,25 +647,25 @@
             currentUser.serviceName = document.getElementById('edit-service').value;
             currentUser.phone = document.getElementById('edit-phone').value;
             const newPass = document.getElementById('edit-pass').value;
-            if(newPass) currentUser.pass = newPass;
+            if (newPass) currentUser.pass = newPass;
 
             const dbUserIndex = db.users.findIndex(u => u.id === currentUser.id);
             db.users[dbUserIndex] = currentUser;
             saveData();
             toggleModal('profile-modal');
             alert('Profile Updated Successfully!');
-            initApp(); 
+            initApp();
         }
 
         function renderAgentDeals() {
             const container = document.getElementById('agent-deals-list');
             const noData = document.getElementById('agent-no-deals');
             container.innerHTML = '';
-            
-            const myService = currentUser.role; 
+
+            const myService = currentUser.role;
             const relevantLeads = db.leads.filter(l => l.status[myService] === 'pending');
 
-            if(relevantLeads.length === 0) {
+            if (relevantLeads.length === 0) {
                 noData.classList.remove('hidden');
                 return;
             }
@@ -650,8 +708,9 @@
         }
 
         // --- INIT ---
-        if(currentUser) { initApp(); } else { switchView('login'); }
+        if (currentUser) { initApp(); } else { switchView('login'); }
 
     </script>
 </body>
+
 </html>
