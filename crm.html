@@ -3,382 +3,655 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tour CRM - Pitch Black Edition</title>
+    <title>TravelCRM - Complete System</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        :root {
-            --bg-color: #000000;
-            --card-bg: #0a0a0a;
-            --neon-red: #ff0033;
-            --text-white: #ffffff;
-            --border-color: #333333;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-white);
-            margin: 0; 
-            padding: 0;
-            overflow-x: hidden;
+        /* PDF Template Styles */
+        .a4-container {
+            width: 794px; /* Standard A4 width in px */
+            min-height: 1123px;
+            background: white;
+            padding: 40px;
+            margin: 0 auto;
+            position: relative;
         }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Rajdhani', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-white);
-        }
-
-        /* --- 3D & ANIMATION --- */
-        .animate-entry { animation: fadeInUp 0.6s ease-out; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- BLACK GLASS CARDS --- */
-        .glass-card {
-            background: rgba(10, 10, 10, 0.9);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,1);
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--neon-red);
-            box-shadow: 0 0 25px rgba(255, 0, 51, 0.3);
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: 260px;
-            background: #000000;
-            border-right: 1px solid #222;
-            min-height: 100vh;
-            position: fixed;
-            left: 0; top: 0;
-            z-index: 100;
-        }
-        
-        .nav-link {
-            color: #bbbbbb; /* Slightly grey for inactive */
-            margin: 10px 15px;
-            border-radius: 5px;
-            padding: 12px 20px;
-            transition: 0.3s;
-            border-left: 3px solid transparent;
-            cursor: pointer;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-white);
-            background: #111;
-            border-left: 3px solid var(--neon-red);
-            text-shadow: 0 0 8px white;
-        }
-
-        /* --- CONTENT AREA --- */
-        .content-wrapper { margin-left: 260px; padding: 30px; }
-
-        /* --- FORMS & INPUTS (White Text on Black) --- */
-        .form-label { color: var(--text-white); font-weight: 500; }
-        .form-control, .form-select {
-            background-color: #111;
-            border: 1px solid #444;
-            color: var(--text-white);
-            border-radius: 8px;
-            padding: 12px;
-        }
-        .form-control:focus, .form-select:focus {
-            background-color: #000;
-            border-color: var(--neon-red);
-            color: var(--text-white);
-            box-shadow: 0 0 10px rgba(255, 0, 51, 0.2);
-        }
-        .form-control::placeholder { color: #666; }
-
-        /* --- BUTTONS --- */
-        .btn-red {
-            background: linear-gradient(135deg, #ff0033 0%, #990000 100%);
-            border: none;
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(255, 0, 51, 0.4);
-            transition: 0.3s;
-        }
-        .btn-red:hover {
-            transform: scale(1.05);
-            color: white;
-            box-shadow: 0 0 25px var(--neon-red);
-        }
-
-        /* --- TABLES --- */
-        .table { color: var(--text-white); border-color: #333; }
-        .table thead th {
-            color: var(--neon-red);
-            border-bottom: 2px solid #333;
-            background: #050505;
-        }
-        .table tbody td { border-bottom: 1px solid #222; }
-        .table-hover tbody tr:hover { background-color: #111; color: white; }
-
-        /* --- UTILS --- */
-        .text-muted { color: #aaaaaa !important; } /* Force lighter grey for readability */
-        .border-bottom { border-color: #333 !important; }
-        .stat-val { font-size: 2.5rem; font-weight: 700; color: white; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
-
-        /* LOGIN */
-        #login-screen {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: #000;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999;
-        }
-        .d-none { display: none !important; }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen text-gray-800">
 
-    <div id="login-screen">
-        <div class="glass-card p-5 text-center" style="width: 400px; border: 1px solid var(--neon-red);">
-            <div class="mb-4">
-                <i class="bi bi-shield-lock-fill" style="font-size: 3rem; color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red);"></i>
+    <div id="view-login" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md fade-in">
+            <div class="text-center mb-8">
+                <i class="fa-solid fa-plane-departure text-4xl text-blue-600 mb-2"></i>
+                <h1 class="text-2xl font-bold text-gray-800">TravelCRM Login</h1>
+                <p class="text-gray-500 text-sm">Welcome back! Please login to continue.</p>
             </div>
-            <h3 class="fw-bold mb-4">SECURE ACCESS</h3>
-            <form onsubmit="event.preventDefault(); handleLogin();">
-                <input type="email" class="form-control mb-3" placeholder="admin@tourcrm.com" value="admin@crm.com">
-                <input type="password" class="form-control mb-4" placeholder="Password" value="123456">
-                <button class="btn btn-red w-100 py-3 rounded-pill">ENTER SYSTEM</button>
+            
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="login-email" required class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="admin@crm.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="login-pass" required class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Sign In</button>
+            </form>
+
+            <div class="mt-6 text-center text-sm">
+                <p class="text-gray-500">Don't have an account?</p>
+                <button onclick="switchView('register')" class="text-blue-600 font-bold hover:underline">Register as Agent</button>
+            </div>
+            
+            <div class="mt-8 bg-blue-50 p-3 rounded text-xs text-blue-800">
+                <p><strong>Demo Credentials:</strong></p>
+                <p>Admin: admin@crm.com / admin123</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-register" class="hidden min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md fade-in">
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Partner Registration</h1>
+                <p class="text-gray-500 text-sm">Join our network of travel service providers.</p>
+            </div>
+            
+            <form onsubmit="handleRegister(event)" class="space-y-3">
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="text" name="name" placeholder="Full Name" required class="border px-3 py-2 rounded-lg w-full">
+                    <input type="text" name="phone" placeholder="Phone" required class="border px-3 py-2 rounded-lg w-full">
+                </div>
+                <input type="email" name="email" placeholder="Email Address" required class="border px-3 py-2 rounded-lg w-full">
+                <input type="password" name="password" placeholder="Create Password" required class="border px-3 py-2 rounded-lg w-full">
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Service Type</label>
+                    <select name="role" class="w-full border px-3 py-2 rounded-lg bg-white">
+                        <option value="hotel">Hotel Partner</option>
+                        <option value="cab">Cab/Transport Provider</option>
+                        <option value="bus">Bus Operator</option>
+                    </select>
+                </div>
+
+                <input type="text" name="serviceName" placeholder="Business Name (e.g. Sunshine Hotel)" required class="border px-3 py-2 rounded-lg w-full">
+
+                <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700 transition mt-2">Register Now</button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <button onclick="switchView('login')" class="text-gray-500 text-sm hover:text-gray-800">Back to Login</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-app" class="hidden">
+        
+        <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50 shadow-lg print:hidden">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-plane-departure text-2xl text-blue-400"></i>
+                    <div>
+                        <h1 class="text-xl font-bold tracking-wider leading-none">TravelCRM</h1>
+                        <span id="nav-role-badge" class="text-[10px] bg-blue-600 px-2 rounded uppercase font-bold">Admin</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <div class="text-right hidden md:block">
+                        <div id="nav-user-name" class="font-bold text-sm">Admin User</div>
+                        <div id="nav-user-email" class="text-xs text-gray-400">admin@crm.com</div>
+                    </div>
+                    
+                    <button id="btn-profile" onclick="toggleModal('profile-modal')" class="hidden bg-slate-700 hover:bg-slate-600 p-2 rounded-full w-10 h-10 transition">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </button>
+
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-xs font-bold transition">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-7xl mx-auto p-6">
+            
+            <div id="dashboard-admin" class="hidden fade-in">
+                <div class="flex gap-4 border-b mb-6">
+                    <button onclick="switchAdminTab('leads')" id="tab-leads" class="px-4 py-2 border-b-2 border-blue-600 font-bold text-blue-600">Active Leads</button>
+                    <button onclick="switchAdminTab('users')" id="tab-users" class="px-4 py-2 text-gray-500 hover:text-gray-700 relative">
+                        Manage Users
+                        <span id="badge-pending" class="hidden absolute top-1 right-0 bg-red-500 text-white text-[9px] px-1.5 rounded-full">0</span>
+                    </button>
+                </div>
+
+                <div id="section-leads">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Tour Leads</h2>
+                        <button onclick="toggleModal('lead-modal')" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> New Lead
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="p-4">Lead ID</th>
+                                    <th class="p-4">Customer</th>
+                                    <th class="p-4">Service Status</th>
+                                    <th class="p-4 text-right">Invoice/Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-leads-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="section-users" class="hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">User Management</h2>
+                        <div class="bg-white px-4 py-2 rounded shadow text-sm">
+                            Total Users: <span id="stat-users-total" class="font-bold">0</span>
+                        </div>
+                    </div>
+                    
+                    <div id="pending-approvals-box" class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 hidden">
+                        <h3 class="font-bold text-yellow-800 mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pending Registrations</h3>
+                        <div id="pending-users-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow overflow-hidden">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 border-b">
+                                <tr>
+                                    <th class="p-4">Name</th>
+                                    <th class="p-4">Role</th>
+                                    <th class="p-4">Service Name</th>
+                                    <th class="p-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-users-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dashboard-agent" class="hidden fade-in">
+                <div class="mb-6 flex justify-between items-end border-b pb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">My Deals</h2>
+                        <p class="text-gray-500 text-sm">Requests for <span id="agent-service-name" class="font-bold text-gray-700">...</span></p>
+                    </div>
+                </div>
+                <div id="agent-deals-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+                <div id="agent-no-deals" class="hidden text-center py-20 text-gray-400">
+                    <i class="fa-regular fa-folder-open text-4xl mb-3"></i>
+                    <p>No pending deals available.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="lead-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6">
+            <div class="flex justify-between mb-4">
+                <h3 class="font-bold text-lg">Create New Lead</h3>
+                <button onclick="toggleModal('lead-modal')"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <form onsubmit="handleCreateLead(event)" class="grid grid-cols-2 gap-4">
+                <input type="text" name="customerName" placeholder="Customer Name" required class="border p-2 rounded col-span-2">
+                <input type="text" name="package" placeholder="Package Name" required class="border p-2 rounded col-span-2">
+                <input type="date" name="date" required class="border p-2 rounded">
+                <input type="number" name="pax" placeholder="Pax" required class="border p-2 rounded">
+                
+                <div class="col-span-2 text-xs font-bold text-gray-500 uppercase mt-2">Allocated Budgets (INR)</div>
+                <input type="number" name="budgetHotel" placeholder="Hotel Budget" required class="border p-2 rounded">
+                <input type="number" name="budgetCab" placeholder="Cab Budget" required class="border p-2 rounded">
+                <input type="number" name="budgetBus" placeholder="Bus Budget" required class="border p-2 rounded">
+                <input type="number" name="totalAmount" placeholder="Total Client Price" required class="border p-2 rounded bg-gray-50 font-bold">
+                
+                <button type="submit" class="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 font-bold mt-2">Create Lead</button>
             </form>
         </div>
     </div>
 
-    <div id="main-app" class="d-none">
-        
-        <nav class="sidebar py-4">
-            <h3 class="text-center fw-bold mb-5" style="color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red);">
-                Travel CRM
-            </h3>
-            <ul class="nav flex-column px-2">
-                <li class="nav-item"><a class="nav-link active" onclick="nav('dashboard', this)"><i class="bi bi-grid-fill me-3"></i>DASHBOARD</a></li>
-                <li class="nav-item"><a class="nav-link" onclick="nav('leads', this)"><i class="bi bi-send-fill me-3"></i>NEW LEAD</a></li>
-                <li class="nav-item"><a class="nav-link" onclick="nav('vendors', this)"><i class="bi bi-people-fill me-3"></i>VENDORS</a></li>
-                <li class="nav-item"><a class="nav-link" onclick="nav('reports', this)"><i class="bi bi-graph-up me-3"></i>REPORTS</a></li>
-                <li class="nav-item mt-5"><a class="nav-link text-danger fw-bold" onclick="location.reload()"><i class="bi bi-power me-3"></i>LOGOUT</a></li>
-            </ul>
-        </nav>
+    <div id="profile-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-md rounded-xl shadow-2xl p-6">
+            <div class="flex justify-between mb-4 border-b pb-2">
+                <h3 class="font-bold text-lg">Edit Profile</h3>
+                <button onclick="toggleModal('profile-modal')"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <form onsubmit="handleUpdateProfile(event)" class="space-y-4">
+                <div>
+                    <label class="text-xs text-gray-500">Full Name</label>
+                    <input type="text" id="edit-name" class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Business / Service Name</label>
+                    <input type="text" id="edit-service" class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Phone</label>
+                    <input type="text" id="edit-phone" class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Password</label>
+                    <input type="password" id="edit-pass" placeholder="Leave blank to keep same" class="w-full border p-2 rounded">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Update Profile</button>
+            </form>
+        </div>
+    </div>
 
-        <div class="content-wrapper">
+    <div style="position: absolute; left: -9999px;">
+        <div id="voucher-template" class="a4-container text-gray-800">
             
-            <div class="d-flex justify-content-between align-items-center mb-5 animate-entry">
-                <h2 class="fw-bold" id="page-title">OVERVIEW</h2>
-                <div class="d-flex align-items-center gap-4">
-                    <i class="bi bi-bell-fill fs-4 text-white" style="cursor: pointer;"></i>
-                    <div class="d-flex align-items-center px-3 py-2" style="background: #111; border-radius: 50px; border: 1px solid #333;">
-                        <img src="https://ui-avatars.com/api/?name=Admin&background=ff0033&color=fff" class="rounded-circle me-2" width="30">
-                        <span class="small fw-bold">SUPER ADMIN</span>
-                    </div>
+            <div class="flex justify-between items-center border-b-2 border-blue-800 pb-6 mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-blue-900 uppercase tracking-widest">Wanderlust</h1>
+                    <p class="text-sm font-semibold text-gray-500 tracking-wider">TRAVELS & HOLIDAYS</p>
+                </div>
+                <div class="text-right">
+                    <h2 class="text-xl font-bold text-gray-400">TRAVEL INVOICE</h2>
+                    <p class="text-sm font-mono mt-1 text-gray-600">REF: <span id="v-ref"></span></p>
                 </div>
             </div>
 
-            <div id="view-dashboard" class="animate-entry">
-                <div class="row g-4 mb-5">
-                    <div class="col-md-3">
-                        <div class="glass-card p-4">
-                            <div class="stat-val">150</div>
-                            <div class="text-muted small uppercase">TOTAL LEADS</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="glass-card p-4">
-                            <div class="stat-val text-danger">45</div>
-                            <div class="text-muted small uppercase">PENDING</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="glass-card p-4">
-                            <div class="stat-val">120</div>
-                            <div class="text-muted small uppercase">VENDORS</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="glass-card p-4">
-                            <div class="stat-val" style="color: var(--neon-red);">₹5.2L</div>
-                            <div class="text-muted small uppercase">REVENUE</div>
-                        </div>
-                    </div>
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                    <h3 class="text-xs font-bold text-gray-400 uppercase mb-2">Billed To</h3>
+                    <p class="text-lg font-bold text-gray-800" id="v-name">Client Name</p>
+                    <p class="text-sm text-gray-600 mt-1">Total Guests: <span id="v-pax">2</span> Adults</p>
                 </div>
-
-                <div class="glass-card p-4">
-                    <h5 class="mb-4 text-white">LIVE STATUS</h5>
-                    <table class="table table-hover">
-                        <thead><tr><th>CLIENT</th><th>DESTINATION</th><th>STATUS</th><th>REPLY</th></tr></thead>
-                        <tbody id="lead-table-body">
-                            <tr>
-                                <td>Amit Kumar</td>
-                                <td>Manali</td>
-                                <td><span class="badge bg-danger">SENT</span></td>
-                                <td class="text-muted">Waiting...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                    <h3 class="text-xs font-bold text-gray-400 uppercase mb-2">Trip Details</h3>
+                    <p class="text-lg font-bold text-gray-800" id="v-pkg">Package Name</p>
+                    <p class="text-sm text-gray-600 mt-1">Travel Date: <span id="v-date">...</span></p>
                 </div>
             </div>
 
-            <div id="view-leads" class="d-none animate-entry">
-                <div class="glass-card p-5">
-                    <div class="d-flex justify-content-between mb-4 border-bottom pb-3">
-                        <h4 class="text-white">BROADCAST INQUIRY</h4>
-                        <span class="badge bg-danger d-flex align-items-center">PRIORITY HIGH</span>
-                    </div>
-                    
-                    <form id="leadForm" onsubmit="event.preventDefault(); sendBroadcast();">
-                        <div class="row g-4">
-                            <div class="col-12"><h6 class="text-danger small fw-bold">CLIENT INFO</h6></div>
-                            <div class="col-md-6">
-                                <label class="form-label">Client Name</label>
-                                <input type="text" class="form-control" id="c_name" placeholder="Enter Name" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Phone Number</label>
-                                <input type="text" class="form-control" id="c_phone" placeholder="Enter Contact" required>
-                            </div>
-
-                            <div class="col-12 mt-4"><h6 class="text-danger small fw-bold">TRIP DETAILS</h6></div>
-                            <div class="col-md-4">
-                                <label class="form-label">Destination</label>
-                                <input type="text" class="form-control" id="c_dest" placeholder="e.g. Goa" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Travel Date</label>
-                                <input type="date" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Budget (₹)</label>
-                                <input type="text" class="form-control" placeholder="50000">
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label">Requirements</label>
-                                <textarea class="form-control" rows="3" placeholder="Hotel type, Cab type, etc..."></textarea>
-                            </div>
-                        </div>
-                        <div class="mt-5 text-end">
-                            <button class="btn btn-red btn-lg px-5 rounded-pill">BROADCAST NOW</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="mb-8">
+                <h3 class="font-bold text-blue-900 border-b pb-2 mb-4">Service Details</h3>
+                <table class="w-full text-sm">
+                    <thead class="bg-slate-800 text-white">
+                        <tr>
+                            <th class="p-3 text-left w-1/4">Type</th>
+                            <th class="p-3 text-left">Description</th>
+                            <th class="p-3 text-right">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="p-3 font-bold text-gray-600">Accommodation</td>
+                            <td class="p-3">Premium Hotel (Double Sharing)</td>
+                            <td class="p-3 text-right text-green-600 font-bold">Confirmed</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-gray-600">Transport</td>
+                            <td class="p-3">Private Cab & Volvo Transfers</td>
+                            <td class="p-3 text-right text-green-600 font-bold">Confirmed</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <div id="view-vendors" class="d-none animate-entry">
-                <div class="glass-card p-4">
-                    <div class="d-flex justify-content-between mb-4">
-                        <h4>VENDOR LIST</h4>
-                        <button class="btn btn-red btn-sm rounded-pill px-4">+ ADD</button>
-                    </div>
-                    <table class="table">
-                        <thead><tr><th>NAME</th><th>TYPE</th><th>LOCATION</th><th>ACTION</th></tr></thead>
-                        <tbody>
-                            <tr>
-                                <td>Himalayan Travels</td>
-                                <td>Agent</td>
-                                <td>Manali</td>
-                                <td><button class="btn btn-outline-danger btn-sm">View</button></td>
-                            </tr>
-                             <tr>
-                                <td>Goa Cabs</td>
-                                <td>Driver</td>
-                                <td>Goa</td>
-                                <td><button class="btn btn-outline-danger btn-sm">View</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="mt-8 flex justify-between items-center bg-blue-50 p-6 rounded-lg border border-blue-200">
+                <div>
+                    <p class="text-sm font-bold text-gray-500 uppercase">Total Amount Due</p>
+                    <p class="text-3xl font-bold text-blue-900">₹ <span id="v-amount">0</span></p>
+                    <p class="text-xs text-gray-500 mt-1">Tax Inclusive</p>
                 </div>
+                
+                <a id="v-pay-btn" href="#" target="_blank" style="text-decoration: none; display: inline-block;">
+                    <div style="background-color: #2563eb; color: white; padding: 15px 30px; border-radius: 8px; font-weight: bold; font-family: sans-serif;">
+                        PAY NOW <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
             </div>
 
-            <div id="view-reports" class="d-none animate-entry">
-                <div class="glass-card p-4">
-                    <h4>ANALYTICS</h4>
-                    <div class="alert alert-dark border-danger text-white mt-3">
-                        <i class="bi bi-arrow-up-circle text-danger me-2"></i> Revenue is up by 20%
-                    </div>
-                    <table class="table table-bordered mt-4" style="border-color: #333;">
-                        <thead><tr><th>MONTH</th><th>LEADS</th><th>REVENUE</th></tr></thead>
-                        <tbody>
-                            <tr><td>JAN 2026</td><td>150</td><td>₹ 5.2L</td></tr>
-                            <tr><td>DEC 2025</td><td>120</td><td>₹ 3.8L</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="mt-10 pt-6 border-t border-gray-300 text-xs text-gray-500 text-center">
+                <p class="font-bold text-gray-700 mb-1">Terms & Conditions</p>
+                <p>Click the 'Pay Now' button above to complete your booking securely.</p>
+                <div class="mt-4 font-mono text-gray-400">Generated by WanderlustCRM System</div>
             </div>
 
         </div>
     </div>
 
     <script>
-        // LOGIN
-        function handleLogin() {
-            const screen = document.getElementById('login-screen');
-            screen.style.transition = "opacity 0.8s";
-            screen.style.opacity = "0";
-            setTimeout(() => {
-                screen.style.display = 'none';
-                document.getElementById('main-app').classList.remove('d-none');
-            }, 800);
+        // --- 1. INITIAL STATE & DATABASE ---
+        const defaultUsers = [
+            { id: 1, name: 'Super Admin', email: 'admin@crm.com', pass: 'admin123', role: 'admin', status: 'active', serviceName: 'HQ' },
+            { id: 2, name: 'Rajesh Hotelier', email: 'hotel@demo.com', pass: '123', role: 'hotel', status: 'active', serviceName: 'Royal Palace Hotel', phone: '9876543210' },
+            { id: 3, name: 'Suresh Cabs', email: 'cab@demo.com', pass: '123', role: 'cab', status: 'active', serviceName: 'Fast Cabs', phone: '9988776655' }
+        ];
+
+        let db = {
+            users: JSON.parse(localStorage.getItem('crm_users')) || defaultUsers,
+            leads: JSON.parse(localStorage.getItem('crm_leads')) || []
+        };
+        
+        let currentUser = null;
+
+        function saveData() {
+            localStorage.setItem('crm_users', JSON.stringify(db.users));
+            localStorage.setItem('crm_leads', JSON.stringify(db.leads));
         }
 
-        // NAV
-        function nav(id, el) {
-            document.querySelectorAll('[id^="view-"]').forEach(x => x.classList.add('d-none'));
-            const view = document.getElementById('view-' + id);
-            view.classList.remove('d-none');
-            
-            // Re-animate
-            view.classList.remove('animate-entry');
-            void view.offsetWidth;
-            view.classList.add('animate-entry');
+        // --- 2. AUTHENTICATION ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+            const user = db.users.find(u => u.email === email && u.pass === pass);
 
-            const titles = {'dashboard':'OVERVIEW', 'leads':'BROADCAST LEAD', 'vendors':'VENDOR DIRECTORY', 'reports':'ANALYTICS'};
-            document.getElementById('page-title').innerText = titles[id];
+            if (!user) { alert('Invalid Credentials!'); return; }
+            if (user.status === 'pending') { alert('Registration Pending Approval! Please contact Admin.'); return; }
 
-            document.querySelectorAll('.nav-link').forEach(x => x.classList.remove('active'));
-            el.classList.add('active');
+            currentUser = user;
+            initApp();
         }
 
-        // BROADCAST
-        function sendBroadcast() {
-            const name = document.getElementById('c_name').value;
-            const dest = document.getElementById('c_dest').value;
+        function handleRegister(e) {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const newUser = {
+                id: Date.now(),
+                name: fd.get('name'),
+                email: fd.get('email'),
+                pass: fd.get('password'),
+                phone: fd.get('phone'),
+                role: fd.get('role'), 
+                serviceName: fd.get('serviceName'),
+                status: 'pending' 
+            };
+            if (db.users.find(u => u.email === newUser.email)) { alert('Email already registered!'); return; }
 
-            Swal.fire({
-                title: 'SENDING...',
-                background: '#000', color: '#fff',
-                timer: 1500, didOpen: () => Swal.showLoading()
-            }).then(() => {
-                Swal.fire({ 
-                    icon: 'success', title: 'SENT', 
-                    background: '#000', color: '#fff', iconColor: '#ff0033',
-                    showConfirmButton: false, timer: 1000 
-                });
+            db.users.push(newUser);
+            saveData();
+            alert('Registration Successful! Your account is PENDING ADMIN APPROVAL. You cannot login yet.');
+            switchView('login');
+        }
 
-                const tbody = document.getElementById('lead-table-body');
-                tbody.innerHTML = `<tr>
-                    <td>${name}</td>
-                    <td>${dest}</td>
-                    <td><span class="badge bg-danger">SENT</span></td>
-                    <td class="text-white fw-bold"><i class="bi bi-hourglass-split text-danger"></i> Waiting...</td>
-                </tr>` + tbody.innerHTML;
+        function logout() {
+            currentUser = null;
+            location.reload(); 
+        }
 
-                document.getElementById('leadForm').reset();
+        // --- 3. VIEW MANAGEMENT ---
+        function switchView(viewName) {
+            document.querySelectorAll('body > div').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+        }
+
+        function initApp() {
+            switchView('app');
+            document.getElementById('nav-user-name').innerText = currentUser.name;
+            document.getElementById('nav-user-email').innerText = currentUser.email;
+            document.getElementById('nav-role-badge').innerText = currentUser.role;
+
+            if (currentUser.role === 'admin') {
+                document.getElementById('dashboard-admin').classList.remove('hidden');
+                document.getElementById('btn-profile').classList.add('hidden');
+                renderAdminUsers(); 
+                renderAdminLeads();
+            } else {
+                document.getElementById('dashboard-agent').classList.remove('hidden');
+                document.getElementById('btn-profile').classList.remove('hidden');
+                document.getElementById('agent-service-name').innerText = currentUser.serviceName;
+                document.getElementById('edit-name').value = currentUser.name;
+                document.getElementById('edit-service').value = currentUser.serviceName;
+                document.getElementById('edit-phone').value = currentUser.phone || '';
+                renderAgentDeals();
+            }
+        }
+
+        // --- 4. ADMIN FUNCTIONS ---
+        function switchAdminTab(tab) {
+            document.getElementById('section-leads').classList.add('hidden');
+            document.getElementById('section-users').classList.add('hidden');
+            document.getElementById('tab-leads').classList.remove('border-b-2', 'border-blue-600', 'text-blue-600');
+            document.getElementById('tab-users').classList.remove('border-b-2', 'border-blue-600', 'text-blue-600');
+            document.getElementById('tab-users').classList.add('text-gray-500');
+            document.getElementById('tab-leads').classList.add('text-gray-500');
+
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).classList.add('border-b-2', 'border-blue-600', 'text-blue-600');
+            document.getElementById(`tab-${tab}`).classList.remove('text-gray-500');
+
+            if(tab === 'users') renderAdminUsers();
+            if(tab === 'leads') renderAdminLeads();
+        }
+
+        function renderAdminUsers() {
+            const pending = db.users.filter(u => u.status === 'pending');
+            const all = db.users;
+
+            const badge = document.getElementById('badge-pending');
+            if(pending.length > 0) {
+                badge.innerText = pending.length;
+                badge.classList.remove('hidden');
+                document.getElementById('pending-approvals-box').classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+                document.getElementById('pending-approvals-box').classList.add('hidden');
+            }
+
+            document.getElementById('stat-users-total').innerText = all.length;
+            const pendingContainer = document.getElementById('pending-users-list');
+            pendingContainer.innerHTML = '';
+            pending.forEach(u => {
+                pendingContainer.innerHTML += `
+                    <div class="bg-white p-3 rounded shadow flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-sm">${u.name}</div>
+                            <div class="text-xs text-gray-500">${u.role.toUpperCase()} • ${u.serviceName}</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="approveUser(${u.id}, false)" class="text-red-500 hover:bg-red-50 p-1 rounded"><i class="fa-solid fa-times"></i></button>
+                            <button onclick="approveUser(${u.id}, true)" class="text-green-600 hover:bg-green-50 p-1 rounded"><i class="fa-solid fa-check"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const allContainer = document.getElementById('all-users-list');
+            allContainer.innerHTML = '';
+            all.forEach(u => {
+                let statusColor = u.status === 'active' ? 'text-green-600 bg-green-50' : 'text-yellow-600 bg-yellow-50';
+                allContainer.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-3 font-medium">${u.name} <br><span class="text-xs text-gray-400">${u.email}</span></td>
+                        <td class="p-3 uppercase text-xs font-bold text-gray-500">${u.role}</td>
+                        <td class="p-3 text-sm">${u.serviceName}</td>
+                        <td class="p-3"><span class="${statusColor} px-2 py-1 rounded text-xs font-bold uppercase">${u.status}</span></td>
+                    </tr>
+                `;
             });
         }
+
+        function approveUser(id, isApproved) {
+            const user = db.users.find(u => u.id === id);
+            if(isApproved) {
+                user.status = 'active';
+                alert(`${user.name} Approved!`);
+            } else {
+                db.users = db.users.filter(u => u.id !== id);
+                alert('User request rejected.');
+            }
+            saveData();
+            renderAdminUsers();
+        }
+
+        function handleCreateLead(e) {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const newLead = {
+                id: 'LD-'+Date.now().toString().slice(-4),
+                customer: fd.get('customerName'),
+                pkg: fd.get('package'),
+                date: fd.get('date'),
+                pax: fd.get('pax'),
+                total: fd.get('totalAmount'),
+                budgets: {
+                    hotel: fd.get('budgetHotel'),
+                    cab: fd.get('budgetCab'),
+                    bus: fd.get('budgetBus')
+                },
+                status: { hotel: 'pending', cab: 'pending', bus: 'pending' }
+            };
+            db.leads.push(newLead);
+            saveData();
+            toggleModal('lead-modal');
+            renderAdminLeads();
+        }
+
+        function renderAdminLeads() {
+            const tbody = document.getElementById('admin-leads-list');
+            tbody.innerHTML = '';
+            db.leads.forEach(l => {
+                const isDone = l.status.hotel === 'accepted' && l.status.cab === 'accepted' && l.status.bus === 'accepted';
+                
+                // --- NEW BUTTON LOGIC FOR PDF ---
+                const actionBtn = isDone 
+                    ? `<button onclick="downloadPDF('${l.id}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs flex items-center gap-2 ml-auto"><i class="fa-solid fa-download"></i> Download Invoice</button>`
+                    : `<span class="text-gray-400 text-xs italic">Waiting for Agents...</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-4 font-mono text-xs text-gray-500">${l.id}</td>
+                        <td class="p-4">
+                            <div class="font-bold">${l.customer}</div>
+                            <div class="text-xs text-gray-500">${l.pkg}</div>
+                        </td>
+                        <td class="p-4">
+                            <div class="flex gap-1 text-xs">
+                                <span class="px-2 py-1 rounded ${l.status.hotel === 'accepted' ? 'bg-green-200' : 'bg-gray-200'}">H</span>
+                                <span class="px-2 py-1 rounded ${l.status.cab === 'accepted' ? 'bg-green-200' : 'bg-gray-200'}">C</span>
+                                <span class="px-2 py-1 rounded ${l.status.bus === 'accepted' ? 'bg-green-200' : 'bg-gray-200'}">B</span>
+                            </div>
+                        </td>
+                        <td class="p-4 text-right">
+                            ${actionBtn}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // --- 5. PDF GENERATION ENGINE (Merged) ---
+        function downloadPDF(leadId) {
+            const lead = db.leads.find(l => l.id === leadId);
+            if(!lead) return;
+
+            // 1. Inject Data into Template
+            document.getElementById('v-ref').innerText = lead.id;
+            document.getElementById('v-name').innerText = lead.customer;
+            document.getElementById('v-pkg').innerText = lead.pkg;
+            document.getElementById('v-date').innerText = lead.date;
+            document.getElementById('v-pax').innerText = lead.pax;
+            document.getElementById('v-amount').innerText = lead.total;
+
+            // 2. Set Dynamic Payment Link
+            const paymentUrl = `https://example.com/pay/${lead.id}?amount=${lead.total}`;
+            document.getElementById('v-pay-btn').href = paymentUrl;
+
+            // 3. Generate PDF
+            const element = document.getElementById('voucher-template');
+            const opt = {
+                margin:       0,
+                filename:     `Invoice_${lead.customer.replace(/\s+/g, '_')}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true }, 
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // --- 6. AGENT & UTILS ---
+        function handleUpdateProfile(e) {
+            e.preventDefault();
+            currentUser.name = document.getElementById('edit-name').value;
+            currentUser.serviceName = document.getElementById('edit-service').value;
+            currentUser.phone = document.getElementById('edit-phone').value;
+            const newPass = document.getElementById('edit-pass').value;
+            if(newPass) currentUser.pass = newPass;
+
+            const dbUserIndex = db.users.findIndex(u => u.id === currentUser.id);
+            db.users[dbUserIndex] = currentUser;
+            saveData();
+            toggleModal('profile-modal');
+            alert('Profile Updated Successfully!');
+            initApp(); 
+        }
+
+        function renderAgentDeals() {
+            const container = document.getElementById('agent-deals-list');
+            const noData = document.getElementById('agent-no-deals');
+            container.innerHTML = '';
+            
+            const myService = currentUser.role; 
+            const relevantLeads = db.leads.filter(l => l.status[myService] === 'pending');
+
+            if(relevantLeads.length === 0) {
+                noData.classList.remove('hidden');
+                return;
+            }
+            noData.classList.add('hidden');
+
+            relevantLeads.forEach(l => {
+                container.innerHTML += `
+                    <div class="bg-white p-5 rounded-lg shadow border-l-4 border-blue-500">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-xs font-mono bg-gray-100 px-2 py-1 rounded">${l.id}</span>
+                            <span class="text-xs text-gray-500">${l.date}</span>
+                        </div>
+                        <h3 class="font-bold text-lg">${l.pkg}</h3>
+                        <p class="text-sm text-gray-600 mb-4">${l.pax} Pax • ${l.customer}</p>
+                        
+                        <div class="bg-gray-50 p-3 rounded mb-4 text-center">
+                            <div class="text-xs text-gray-500 uppercase">Offered Budget</div>
+                            <div class="text-2xl font-bold text-gray-800">₹${l.budgets[myService]}</div>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <button onclick="respondDeal('${l.id}', 'rejected')" class="flex-1 border border-red-500 text-red-500 py-2 rounded hover:bg-red-50">Reject</button>
+                            <button onclick="respondDeal('${l.id}', 'accepted')" class="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 font-bold">Accept</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function respondDeal(leadId, status) {
+            const lead = db.leads.find(l => l.id === leadId);
+            lead.status[currentUser.role] = status;
+            saveData();
+            renderAgentDeals();
+            alert(status === 'accepted' ? 'Deal Accepted!' : 'Deal Rejected');
+        }
+
+        function toggleModal(id) {
+            document.getElementById(id).classList.toggle('hidden');
+        }
+
+        // --- INIT ---
+        if(currentUser) { initApp(); } else { switchView('login'); }
+
     </script>
 </body>
 </html>
